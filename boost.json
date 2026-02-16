@@ -1,0 +1,12 @@
+{
+    "agents": [
+        "cursor"
+    ],
+    "herd_mcp": true,
+    "mcp": true,
+    "sail": false,
+    "skills": [
+        "wayfinder-development",
+        "pest-testing"
+    ]
+}

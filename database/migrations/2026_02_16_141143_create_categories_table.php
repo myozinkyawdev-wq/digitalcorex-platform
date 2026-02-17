@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->integer('order')->default(0);
             $table->string('slug', 50);
+            $table->string('code', 50);
             $table->string('description', 500)->nullable();
             $table->boolean('is_active')->default(true);
             $table->timestamps();

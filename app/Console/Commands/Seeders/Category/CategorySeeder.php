@@ -26,33 +26,12 @@ class CategorySeeder extends Command
      */
     public function handle()
     {
-        foreach ($this->getCategories() as $categoryData) {
+        foreach (config('categories') as $categoryData) {
             Category::query()->updateOrCreate([
                 'name' => $categoryData['name'],
             ], $categoryData);
         }
 
         $this->info('Categories successfully inserted...');
-    }
-
-    private function getCategories(): array
-    {
-        return [
-            [
-                'name' => 'VPN & Privacy',
-                'slug' => 'vpn-privacy',
-                'order' => 1,
-            ],
-            [
-                'name' => 'Streaming',
-                'slug' => 'streaming',
-                'order' => 2,
-            ],
-            [
-                'name' => 'Social Media',
-                'slug' => 'social-premium',
-                'order' => 3,
-            ]
-        ];
     }
 }

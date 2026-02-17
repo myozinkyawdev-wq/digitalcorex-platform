@@ -16,6 +16,7 @@ class ProductVariant extends BaseModel
     protected $fillable = [
         'product_id',
         'name',
+        'order',
         'value',
         'variant_unit_id',
         'variant_unit_type_id',
@@ -57,6 +58,11 @@ class ProductVariant extends BaseModel
     public function getProductId(): string
     {
         return $this->product_id;
+    }
+
+    public function getOrder(): int
+    {
+        return $this->order;
     }
 
     public function getValue(): string

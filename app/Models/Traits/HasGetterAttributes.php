@@ -21,6 +21,11 @@ trait HasGetterAttributes
         return $this->description;
     }
 
+    public function getCode(): string
+    {
+        return $this->code;
+    }
+
     public function isActive(): bool
     {
         return $this->is_active;

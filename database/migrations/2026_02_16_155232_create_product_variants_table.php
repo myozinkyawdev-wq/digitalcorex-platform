@@ -15,6 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->foreignUuid('product_id')->index();
             $table->string('name')->nullable();
+            $table->integer('order')->default(0);
             $table->integer('value')->nullable();
             $table->foreignUuid('variant_unit_type_id')->nullable();
             $table->foreignUuid('variant_unit_id')->nullable();

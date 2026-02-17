@@ -26,7 +26,7 @@ class VariantUnitSeeder extends Command
      */
     public function handle()
     {
-        foreach ($this->getUnits() as $unit) {
+        foreach (config('variant-units') as $unit) {
             $variantUnit = VariantUnit::updateOrCreate([
                 'name' => $unit['name'],
             ], $unit);
@@ -35,110 +35,5 @@ class VariantUnitSeeder extends Command
         }
 
         $this->info('Variant units successfully inserted...');
-    }
-
-    private function getUnits()
-    {
-        return [
-            [
-                'name' => 'Durations',
-                'order' => 1,
-                'is_unit' => false,
-                'children' => [
-                    [
-                        'name' => 'Hours',
-                        'type' => 'hours',
-                        'order' => 1,
-                        'is_unit' => true,
-                    ],
-                    [
-                        'name' => 'Days',
-                        'type' => 'days',
-                        'order' => 2,
-                        'is_unit' => true,
-                    ],
-                    [
-                        'name' => 'Week',
-                        'type' => 'week',
-                        'order' => 3,
-                        'is_unit' => true,
-                    ],
-                    [
-                        'name' => 'Years',
-                        'type' => 'years',
-                        'order' => 4,
-                        'is_unit' => true,
-                    ],
-                    [
-                        'name' => 'Lifetime',
-                        'type' => 'lifetime',
-                        'order' => 5,
-                        'is_unit' => true,
-                    ],
-                ]
-            ],
-            [
-                'name' => 'Data Storage',
-                'order' => 2,
-                'is_unit' => false,
-                'children' => [
-                    [
-                        'name' => 'Megabytes (MB)',
-                        'type' => 'MB',
-                        'order' => 1,
-                        'is_unit' => true,
-                    ],
-                    [
-                        'name' => 'Gigabytes (GB)',
-                        'type' => 'GB',
-                        'order'=> 2,
-                        'is_unit' => true,
-                    ],
-                    [
-                        'name' => 'Terabytes (TB)',
-                        'type' => 'TB',
-                        'order' => 3,
-                        'is_unit' => true,
-                    ],
-                ]
-            ],
-            [
-                'name' => 'Usage Limit',
-                'order' => 3,
-                'is_unit' => false,
-                'children' => [
-                    [
-                        'name' => 'Devices',
-                        'type' => 'devices',
-                        'order' => 1,
-                        'is_unit' => true,
-                    ],
-                    [
-                        'name' => 'Tokens/Credits',
-                        'type' => 'tokens',
-                        'order' => 2,
-                        'is_unit' => true,
-                    ],
-                    [
-                        'name' => 'Accounts',
-                        'type' => 'accounts',
-                        'order' => 3,
-                        'is_unit' => true,
-                    ],
-                    [
-                        'name' => 'Users',
-                        'type' => 'users',
-                        'order' => 3,
-                        'is_unit' => true,
-                    ],
-                    [
-                        'name' => 'Unlimited',
-                        'type' => 'unlimited',
-                        'order' => 3,
-                        'is_unit' => true,
-                    ],
-                ]
-            ],
-        ];
     }
 }

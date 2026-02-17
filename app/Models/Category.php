@@ -26,7 +26,7 @@ class Category extends BaseModel
         'name',
         'order',
         'slug',
-        'order',
+        'code',
         'description',
         'is_active',
     ];

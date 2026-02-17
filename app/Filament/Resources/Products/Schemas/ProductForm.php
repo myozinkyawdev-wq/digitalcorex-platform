@@ -139,16 +139,11 @@ class ProductForm
                                             ->collapsed()
                                             ->cloneable()
                                             ->table([
-                                                TableColumn::make('Value'),
                                                 TableColumn::make('Variant Unit Type'),
+                                                TableColumn::make('Value'),
                                                 TableColumn::make('Variant Unit'),
                                             ])
                                             ->schema([
-                                                TextInput::make('value')
-                                                    ->maxLength(255)
-                                                    ->columnSpan(2)
-                                                    ->required(),
-
                                                 // Filter-only field (NOT stored in DB)
                                                 Select::make('variant_unit_type_id')
                                                     ->options(VariantUnit::toCachedVariantUnitGroupSelection())
@@ -157,6 +152,11 @@ class ProductForm
                                                     ->required()
                                                     ->live()
                                                     ->afterStateUpdated(fn (Set $set) => $set('variant_unit_id', null)),
+
+                                                TextInput::make('value')
+                                                    ->maxLength(255)
+                                                    ->columnSpan(2)
+                                                    ->required(),
 
                                                 // This is saved as variant_unit_id in pivot table
                                                 Select::make('variant_unit_id')

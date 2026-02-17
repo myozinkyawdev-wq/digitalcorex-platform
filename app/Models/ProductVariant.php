@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\ProductType;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 
 class ProductVariant extends BaseModel
@@ -17,14 +18,12 @@ class ProductVariant extends BaseModel
         'product_id',
         'name',
         'order',
-        'value',
-        'variant_unit_id',
-        'variant_unit_type_id',
         'price',
         'cost_price',
         'stock',
         'sku',
         'is_available',
+        'is_active',
     ];
 
     /**
@@ -36,6 +35,7 @@ class ProductVariant extends BaseModel
     {
         return [
             'type' => ProductType::class,
+            'is_available' => 'boolean',
             'is_active' => 'boolean',
         ];
     }
@@ -45,14 +45,16 @@ class ProductVariant extends BaseModel
         return $this->belongsTo(Product::class);
     }
 
-    public function variantUnitType(): BelongsTo
+    public function productVariantUnitValues(): HasMany
     {
-        return $this->belongsTo(VariantUnit::class, 'variant_unit_type_id');
+        return $this->hasMany(ProductVariantUnitValue::class);
     }
-    
-    public function variantUnit(): BelongsTo
+
+    public function variantUnits()
     {
-        return $this->belongsTo(VariantUnit::class, 'variant_unit_id');
+        return $this->belongsToMany(VariantUnit::class, 'product_variant_unit_values')
+            ->using(ProductVariantUnitValue::class)
+            ->withPivot('value');
     }
 
     public function getProductId(): string
@@ -63,16 +65,6 @@ class ProductVariant extends BaseModel
     public function getOrder(): int
     {
         return $this->order;
-    }
-
-    public function getValue(): string
-    {
-        return $this->value;
-    }
-
-    public function getUnit(): string
-    {
-        return $this->unit;
     }
 
     public function getPrice(): float

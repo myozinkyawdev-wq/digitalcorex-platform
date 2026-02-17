@@ -16,14 +16,12 @@ return new class extends Migration
             $table->foreignUuid('product_id')->index();
             $table->string('name')->nullable();
             $table->integer('order')->default(0);
-            $table->integer('value')->nullable();
-            $table->foreignUuid('variant_unit_type_id')->nullable();
-            $table->foreignUuid('variant_unit_id')->nullable();
             $table->decimal('price', 12, 2)->nullable();
             $table->decimal('cost_price', 12, 2)->nullable();
             $table->integer('stock')->default(0);
             $table->string('sku')->nullable();
-            $table->string('is_available')->default(true);
+            $table->boolean('is_available')->default(true);
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }

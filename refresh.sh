@@ -11,3 +11,6 @@ php artisan seed:categories
 
 echo '---------- Installing Variant Units ----------'
 php artisan seed:variant-units
+
+echo '---------- Installing Products ----------'
+php artisan seed:products

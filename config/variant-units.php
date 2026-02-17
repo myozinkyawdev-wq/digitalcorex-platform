@@ -1,49 +1,49 @@
 <?php
 
-use App\Enums\VariantUnit;
+use App\Enums\VariantUnitEnum;
 
 return [
     [
         'name' => 'Durations',
         'type' => 'durations',
         'order' => 1,
-        'is_unit' => false,
+        'is_group' => false,
         'children' => [
             [
                 'name' => 'Hours',
-                'type' => VariantUnit::HOURS(),
+                'type' => VariantUnitEnum::HOURS(),
                 'order' => 1,
-                'is_unit' => true,
+                'is_group' => true,
             ],
             [
                 'name' => 'Days',
-                'type' => VariantUnit::DAYS(),
+                'type' => VariantUnitEnum::DAYS(),
                 'order' => 2,
-                'is_unit' => true,
+                'is_group' => true,
             ],
             [
                 'name' => 'Weeks',
-                'type' => VariantUnit::WEEKS(),
+                'type' => VariantUnitEnum::WEEKS(),
                 'order' => 3,
-                'is_unit' => true,
+                'is_group' => true,
             ],
             [
                 'name' => 'Months',
-                'type' => VariantUnit::MONTHS(),
+                'type' => VariantUnitEnum::MONTHS(),
                 'order' => 4,
-                'is_unit' => true,
+                'is_group' => true,
             ],
             [
                 'name' => 'Years',
-                'type' => VariantUnit::YEARS(),
+                'type' => VariantUnitEnum::YEARS(),
                 'order' => 5,
-                'is_unit' => true,
+                'is_group' => true,
             ],
             [
                 'name' => 'Lifetime',
-                'type' => VariantUnit::LIFETIME(),
+                'type' => VariantUnitEnum::LIFETIME(),
                 'order' => 6,
-                'is_unit' => true,
+                'is_group' => true,
             ],
         ]
     ],
@@ -51,25 +51,25 @@ return [
         'name' => 'Data Storage',
         'type' => 'data-storage',
         'order' => 2,
-        'is_unit' => false,
+        'is_group' => false,
         'children' => [
             [
                 'name' => 'Megabytes (MB)',
-                'type' => VariantUnit::MB(),
+                'type' => VariantUnitEnum::MB(),
                 'order' => 1,
-                'is_unit' => true,
+                'is_group' => true,
             ],
             [
                 'name' => 'Gigabytes (GB)',
-                'type' => VariantUnit::GB(),
+                'type' => VariantUnitEnum::GB(),
                 'order'=> 2,
-                'is_unit' => true,
+                'is_group' => true,
             ],
             [
                 'name' => 'Terabytes (TB)',
-                'type' => VariantUnit::TB(),
+                'type' => VariantUnitEnum::TB(),
                 'order' => 3,
-                'is_unit' => true,
+                'is_group' => true,
             ],
         ]
     ],
@@ -77,37 +77,37 @@ return [
         'name' => 'Usage Limit',
         'type' => 'usage-limit',
         'order' => 3,
-        'is_unit' => false,
+        'is_group' => false,
         'children' => [
             [
                 'name' => 'Devices',
-                'type' => VariantUnit::DEVICES(),
+                'type' => VariantUnitEnum::DEVICES(),
                 'order' => 1,
-                'is_unit' => true,
+                'is_group' => true,
             ],
             [
                 'name' => 'Tokens/Credits',
-                'type' => VariantUnit::TOKENS(),
+                'type' => VariantUnitEnum::TOKENS(),
                 'order' => 2,
-                'is_unit' => true,
+                'is_group' => true,
             ],
             [
                 'name' => 'Accounts',
-                'type' => VariantUnit::ACCOUNTS(),
+                'type' => VariantUnitEnum::ACCOUNTS(),
                 'order' => 3,
-                'is_unit' => true,
+                'is_group' => true,
             ],
             [
                 'name' => 'Users',
-                'type' => VariantUnit::USERS(),
+                'type' => VariantUnitEnum::USERS(),
                 'order' => 4,
-                'is_unit' => true,
+                'is_group' => true,
             ],
             [
                 'name' => 'Unlimited',
-                'type' => VariantUnit::UNLIMITED(),
+                'type' => VariantUnitEnum::UNLIMITED(),
                 'order' => 5,
-                'is_unit' => true,
+                'is_group' => true,
             ],
         ]
     ],

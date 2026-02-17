@@ -11,14 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('variant_units', function (Blueprint $table) {
+        Schema::create('product_variant_unit_values', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('parent_id')->nullable()->index();
-            $table->string('name');
-            $table->string('type', 50)->nullable();
+            $table->foreignUuid('product_variant_id');
+            $table->foreignUuid('variant_unit_type_id');
+            $table->foreignUuid('variant_unit_id');
+            $table->string('value');
             $table->integer('order')->default(0);
-            $table->boolean('is_group')->default(true);
-            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('variant_units');
+        Schema::dropIfExists('product_variant_unit_values');
     }
 };

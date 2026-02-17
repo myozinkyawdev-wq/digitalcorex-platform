@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands\Seeders\Category;
+namespace App\Console\Commands\Seeders\Shop;
 
 use App\Models\Category;
 use Illuminate\Console\Command;

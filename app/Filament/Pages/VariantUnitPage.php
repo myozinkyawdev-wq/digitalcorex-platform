@@ -9,7 +9,7 @@ use Filament\Support\Icons\Heroicon;
 use SolutionForest\FilamentTree\Pages\TreePage;
 use UnitEnum;
 
-class VariantUnit extends TreePage
+class VariantUnitPage extends TreePage
 {
     protected static string $model = TreeModel::class;
 

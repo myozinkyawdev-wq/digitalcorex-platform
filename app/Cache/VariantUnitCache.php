@@ -38,7 +38,7 @@ class VariantUnitCache
      * Children selection by parent (id => name) forever cached.
      * IMPORTANT: key must include parentId to avoid cache collision.
      */
-    public function toVariantUnitSelection(int|string $parentId): array
+    public function toVariantUnitSelection(string $parentId): array
     {
         $key = $this->cache->keyWithNamespaceVersion(
             self::NAMESPACE,

@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum VariantUnit: string
+enum VariantUnitEnum: string
 {
     use EnumHelper;
 

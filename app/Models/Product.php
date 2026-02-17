@@ -44,7 +44,7 @@ class Product extends BaseModel
         return $this->belongsTo(Category::class);
     }
 
-    public function variants(): HasMany
+    public function productVariants(): HasMany
     {
         return $this->hasMany(ProductVariant::class);
     }
@@ -59,7 +59,7 @@ class Product extends BaseModel
         return $this->slug;
     }
 
-    public function getType(): string
+    public function getType(): ProductType
     {
         return $this->type;
     }

@@ -6,6 +6,7 @@ use App\Cache\VariantUnitCache;
 use App\Models\Traits\HasGetterAttributes;
 use App\Observers\Category\VariantUnitObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use SolutionForest\FilamentTree\Concern\ModelTree;
 
 #[ObservedBy(VariantUnitObserver::class)]
@@ -24,7 +25,7 @@ class VariantUnit extends BaseModel
         'name',
         'type',
         'order',
-        'is_unit',
+        'is_group',
         'is_active',
     ];
 
@@ -46,8 +47,13 @@ class VariantUnit extends BaseModel
     }
     
     public static function toCachedVariantUnitSelection(string $parentId): array
-    {
+    { 
         return app(VariantUnitCache::class)->toVariantUnitSelection($parentId);
+    }
+
+    public function parent(): BelongsTo
+    {
+        return $this->belongsTo(VariantUnit::class, 'parent_id');
     }
 
     public function getParentId(): ?string
@@ -65,8 +71,8 @@ class VariantUnit extends BaseModel
         return $this->order;
     }
 
-    public function isUnit(): bool
+    public function isGroup(): bool
     {
-        return $this->is_unit;
+        return $this->is_group;
     }
 }

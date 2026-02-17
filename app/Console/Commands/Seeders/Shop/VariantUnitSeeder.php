@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands\Seeders\Products;
+namespace App\Console\Commands\Seeders\Shop;
 
 use App\Models\VariantUnit;
 use Illuminate\Console\Command;

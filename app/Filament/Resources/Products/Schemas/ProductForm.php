@@ -18,6 +18,7 @@ use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
+use Filament\Forms\Components\Repeater\TableColumn;
 
 class ProductForm
 {
@@ -28,7 +29,6 @@ class ProductForm
                 Tabs::make('Tabs')
                     ->columnSpanFull()
                     ->inlineLabel()
-                    ->activeTab(2)
                     ->tabs([
                         Tab::make('Product Informations')
                             ->schema([
@@ -38,37 +38,45 @@ class ProductForm
                                     ->label('Category')
                                     ->searchable()
                                     ->required(),
+
                                 TextInput::make('name')
                                     ->unique(table: Product::class, ignoreRecord: true)
                                     ->maxLength(255)
                                     ->required(),
+
                                 TextInput::make('slug')
                                     ->unique(table: Product::class, ignoreRecord: true)
                                     ->maxLength(50)
                                     ->required(),
+
                                 Select::make('type')
                                     ->placeholder('Please select Product type')
                                     ->options(ProductType::toSelection())
                                     ->label('Product Type')
                                     ->required(),
+
                                 Textarea::make('description')
                                     ->label('Description')
                                     ->maxLength(500),
+
                                 Toggle::make('is_active')
                                     ->default(true),
                             ]),
+
                         Tab::make('Product Variants')
                             ->inlineLabel(false)
                             ->schema([
-                                Repeater::make('variants')
+                                Repeater::make('productVariants')
                                     ->itemLabel(fn (array $state): ?string => $state['name'] ?? $state['sku'] ?? 'Variant')
                                     ->addActionLabel('Add Variant')
-                                    ->relationship('variants')
-                                    ->label('Variants')
+                                    ->relationship('productVariants') // <-- IMPORTANT
+                                    ->label('Product Variants')
+                                    ->orderColumn('order')
                                     ->defaultItems(1)
                                     ->columns(6)
                                     ->reorderable()
                                     ->collapsible()
+                                    ->collapsed()
                                     ->cloneable()
                                     ->schema([
                                         TextInput::make('name')
@@ -78,7 +86,7 @@ class ProductForm
                                             ->required(),
 
                                         TextInput::make('sku')
-                                            ->maxLength(100)                                            
+                                            ->maxLength(100)
                                             ->columnSpan(3)
                                             ->unique(
                                                 table: \App\Models\ProductVariant::class,
@@ -86,34 +94,6 @@ class ProductForm
                                                 ignoreRecord: true
                                             )
                                             ->label('SKU'),
-
-                                        TextInput::make('value')
-                                            ->maxLength(255)
-                                            ->label('Value')
-                                            ->columnSpan(2)
-                                            ->required(),
-
-                                        Select::make('unit_type_id')
-                                            ->options(VariantUnit::toCachedVariantUnitGroupSelection())
-                                            ->placeholder('Please select unit type')
-                                            ->label('Unit Type')
-                                            ->columnSpan(2)
-                                            ->required()
-                                            ->live()
-                                            ->afterStateUpdated(fn (Set $set) => $set('unit_id', null)),
-
-                                        Select::make('unit_id')
-                                            ->placeholder('Please select unit')
-                                            ->label('Unit')
-                                            ->columnSpan(2)
-                                            ->required()
-                                            ->options(fn (Get $get) =>
-                                                $get('unit_type_id')
-                                                    ? VariantUnit::toCachedVariantUnitSelection($get('unit_type_id'))
-                                                    : []
-                                            )
-                                            ->disabled(fn (Get $get) => blank($get('unit_type_id')))
-                                            ->searchable(),
 
                                         TextInput::make('price')
                                             ->label('Price')
@@ -143,19 +123,64 @@ class ProductForm
                                             ->columnSpan(3)
                                             ->default(true)
                                             ->inline(false),
+
+                                        // ✅ This is the seeder-like part:
+                                        // variants -> product_variant_unit_values[]
+                                        Repeater::make('productVariantUnitValues')
+                                            ->label('Unit Values')
+                                            ->relationship('productVariantUnitValues') // <-- ProductVariant hasMany
+                                            ->addActionLabel('Add Unit Value')
+                                            ->orderColumn('order')
+                                            ->defaultItems(1)
+                                            ->columnSpan(6)
+                                            ->columns(6)
+                                            ->reorderable()
+                                            ->collapsible()
+                                            ->collapsed()
+                                            ->cloneable()
+                                            ->table([
+                                                TableColumn::make('Value'),
+                                                TableColumn::make('Variant Unit Type'),
+                                                TableColumn::make('Variant Unit'),
+                                            ])
+                                            ->schema([
+                                                TextInput::make('value')
+                                                    ->maxLength(255)
+                                                    ->columnSpan(2)
+                                                    ->required(),
+
+                                                // Filter-only field (NOT stored in DB)
+                                                Select::make('variant_unit_type_id')
+                                                    ->options(VariantUnit::toCachedVariantUnitGroupSelection())
+                                                    ->placeholder('Please select unit type')
+                                                    ->columnSpan(2)
+                                                    ->required()
+                                                    ->live()
+                                                    ->afterStateUpdated(fn (Set $set) => $set('variant_unit_id', null)),
+
+                                                // This is saved as variant_unit_id in pivot table
+                                                Select::make('variant_unit_id')
+                                                    ->placeholder('Please select unit')
+                                                    ->columnSpan(2)
+                                                    ->required()
+                                                    ->options(fn (Get $get) =>
+                                                        $get('variant_unit_type_id')
+                                                            ? VariantUnit::toCachedVariantUnitSelection($get('variant_unit_type_id'))
+                                                            : []
+                                                    )
+                                                    ->disabled(fn (Get $get) => blank($get('variant_unit_type_id')))
+                                                    ->searchable(),
+                                            ]),
                                     ]),
                             ]),
+
                         Tab::make('Theme')
                             ->schema([
-                                FileUpload::make('thumbnail')
-                                    ->label('Thumbnail'),
-                                FileUpload::make(name: 'cover_photo')
-                                    ->label('Cover Photo'),
-                                ColorPicker::make('accent_color')
-                                    ->label('Accent Color'),
-
+                                FileUpload::make('thumbnail')->label('Thumbnail'),
+                                FileUpload::make('cover_photo')->label('Cover Photo'),
+                                ColorPicker::make('accent_color')->label('Accent Color'),
                             ]),
-                    ])
+                    ]),
             ]);
     }
 }

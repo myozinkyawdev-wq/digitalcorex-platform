@@ -2,20 +2,18 @@
 
 namespace App\Models;
 
-use App\Cache\CategoryCache;
-use App\Models\Product;
+use App\Cache\VariantUnitCache;
 use App\Models\Traits\HasGetterAttributes;
-use App\Observers\Category\CategoryObserver;
+use App\Observers\Category\VariantUnitObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use SolutionForest\FilamentTree\Concern\ModelTree;
 
-#[ObservedBy(CategoryObserver::class)]
-class Category extends BaseModel
+#[ObservedBy(VariantUnitObserver::class)]
+class VariantUnit extends BaseModel
 {
     use ModelTree;
     use HasGetterAttributes;
-    
+
     /**
      * The attributes that are mass assignable.
      *
@@ -24,10 +22,9 @@ class Category extends BaseModel
     protected $fillable = [
         'parent_id',
         'name',
+        'type',
         'order',
-        'slug',
-        'order',
-        'description',
+        'is_unit',
         'is_active',
     ];
 
@@ -43,14 +40,14 @@ class Category extends BaseModel
         ];
     }
 
-    public static function toCachedSelection(): array
+    public static function toCachedVariantUnitGroupSelection(): array
     {
-        return app(CategoryCache::class)->toSelection();
+        return app(VariantUnitCache::class)->toVariantUnitGroupSelection();
     }
-
-    public function products(): HasMany
+    
+    public static function toCachedVariantUnitSelection(string $parentId): array
     {
-        return $this->hasMany(Product::class);
+        return app(VariantUnitCache::class)->toVariantUnitSelection($parentId);
     }
 
     public function getParentId(): ?string
@@ -58,13 +55,18 @@ class Category extends BaseModel
         return $this->parent_id;
     }
 
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
     public function getOrder(): int
     {
         return $this->order;
     }
 
-    public function getSlug(): string
+    public function isUnit(): bool
     {
-        return $this->slug;
+        return $this->is_unit;
     }
 }

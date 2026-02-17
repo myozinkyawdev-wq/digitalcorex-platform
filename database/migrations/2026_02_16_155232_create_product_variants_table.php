@@ -16,7 +16,8 @@ return new class extends Migration
             $table->foreignUuid('product_id')->index();
             $table->string('name')->nullable();
             $table->integer('value')->nullable();
-            $table->string('unit')->nullable();
+            $table->foreignUuid('variant_unit_type_id')->nullable();
+            $table->foreignUuid('variant_unit_id')->nullable();
             $table->decimal('price', 12, 2)->nullable();
             $table->decimal('cost_price', 12, 2)->nullable();
             $table->integer('stock')->default(0);

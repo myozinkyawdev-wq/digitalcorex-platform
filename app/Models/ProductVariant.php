@@ -17,7 +17,8 @@ class ProductVariant extends BaseModel
         'product_id',
         'name',
         'value',
-        'unit',
+        'variant_unit_id',
+        'variant_unit_type_id',
         'price',
         'cost_price',
         'stock',
@@ -41,6 +42,16 @@ class ProductVariant extends BaseModel
     public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);
+    }
+
+    public function variantUnitType(): BelongsTo
+    {
+        return $this->belongsTo(VariantUnit::class, 'variant_unit_type_id');
+    }
+    
+    public function variantUnit(): BelongsTo
+    {
+        return $this->belongsTo(VariantUnit::class, 'variant_unit_id');
     }
 
     public function getProductId(): string

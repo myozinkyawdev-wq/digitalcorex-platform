@@ -2,23 +2,22 @@
 
 namespace App\Filament\Pages;
 
-use App\Models\Category as TreeModel;
-use Filament\Forms\Components\Textarea;
+use App\Models\VariantUnit as TreeModel;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Support\Icons\Heroicon;
 use SolutionForest\FilamentTree\Pages\TreePage;
 use UnitEnum;
 
-class Category extends TreePage
+class VariantUnit extends TreePage
 {
     protected static string $model = TreeModel::class;
-    
-    protected static ?int $navigationSort = 1;
+
+    protected static ?int $navigationSort = 3;
 
     protected static string | UnitEnum | null $navigationGroup = 'Shop';
 
-    protected static \BackedEnum|string|null $navigationIcon = Heroicon::OutlinedTag;
+    protected static \BackedEnum|string|null $navigationIcon = Heroicon::OutlinedVariable;
 
     protected static int $maxDepth = 2;
 
@@ -43,12 +42,12 @@ class Category extends TreePage
                 ->unique(table: TreeModel::class, ignoreRecord: true)
                 ->maxLength(255)
                 ->required(),
-            TextInput::make('slug')
+            TextInput::make('type')
                 ->unique(table: TreeModel::class, ignoreRecord: true)
                 ->maxLength(50)
                 ->required(),
-            Textarea::make(name: 'description')
-                ->maxLength(500),
+            Toggle::make(name: 'is_unit')
+                ->default(true),
             Toggle::make(name: 'is_active')
                 ->default(true),
         ];

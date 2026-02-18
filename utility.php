@@ -10,6 +10,19 @@ use Propaganistas\LaravelPhone\PhoneNumber;
  * @param  string  $label
  * @return array
  */
+if (! function_exists('getBucketDisk')) {
+    function getBucketDisk(): string
+    {
+        return 'public';
+    }
+}
+
+/**
+ * get phone number validation
+ *
+ * @param  string  $label
+ * @return array
+ */
 if (! function_exists('getLaravelPhoneNumberValidation')) {
     function getLaravelPhoneNumberValidation(): array
     {

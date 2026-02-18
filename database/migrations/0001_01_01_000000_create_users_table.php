@@ -21,7 +21,10 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('role', 10)->default(UserRole::USER());
+            $table->string('role', length: 10)->default(value: UserRole::USER());
+            $table->string('telegram_id')->nullable();
+            $table->string('telegram_username')->nullable();
+            $table->string('telegram_photo_url')->nullable();
             $table->string('status', 15)->default(UserStatus::ACTIVE());
             $table->rememberToken();
             $table->timestamps();

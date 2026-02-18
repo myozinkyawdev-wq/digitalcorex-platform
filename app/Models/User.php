@@ -6,6 +6,7 @@ namespace App\Models;
 use App\Enums\UserRole;
 use App\Enums\UserStatus;
 use App\Models\Traits\HasGetterAttributes;
+use App\Models\Traits\HasTelegramAccount;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -16,7 +17,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, TwoFactorAuthenticatable, HasUuids, HasGetterAttributes;
+    use HasFactory, Notifiable, TwoFactorAuthenticatable, HasUuids, HasGetterAttributes, HasTelegramAccount;
 
     /**
      * The attributes that are mass assignable.
@@ -30,6 +31,9 @@ class User extends Authenticatable
         'phone',
         'password',
         'role',
+        'telegram_id',
+        'telegram_username',
+        'telegram_photo_url',
         'status',
     ];
 

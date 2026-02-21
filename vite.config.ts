@@ -24,4 +24,14 @@ export default defineConfig({
     esbuild: {
         jsx: 'automatic',
     },
+    server: {
+        // ngrok ကနေ လှမ်းဆွဲတာကို ခွင့်ပြုဖို့ CORS ကို true ပေးရမယ်
+        cors: true,
+        strictPort: true,
+        // ngrok URL ကို trusted host အဖြစ် သတ်မှတ်ပေးရမယ်
+        hmr: {
+            host: 'miserable-trothless-loree.ngrok-free.dev',
+            protocol: 'wss', // Secure WebSocket သုံးဖို့ပြောတာ
+        },
+    },
 });

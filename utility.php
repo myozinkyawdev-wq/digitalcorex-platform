@@ -1,8 +1,22 @@
 <?php
 
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Propaganistas\LaravelPhone\PhoneNumber;
+
+/**
+ * get authenticated user
+ *
+ * @return User $user
+ */
+if (! function_exists('authUser')) {
+    function authUser(): User
+    {
+        return Auth::user();
+    }
+}
 
 /**
  * get phone number validation

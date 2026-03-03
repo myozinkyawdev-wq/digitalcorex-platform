@@ -26,7 +26,7 @@ class VariantUnitSeeder extends Command
      */
     public function handle()
     {
-        foreach (config('variant-units') as $unit) {
+        foreach (config('utility.variant-units') as $unit) {
             $variantUnit = VariantUnit::updateOrCreate([
                 'name' => $unit['name'],
             ], $unit);

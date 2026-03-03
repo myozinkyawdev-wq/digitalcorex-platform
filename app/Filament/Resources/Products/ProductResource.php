@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Products;
 
+use App\Enums\AdminMenuOrder;
 use App\Filament\Resources\Products\Pages\CreateProduct;
 use App\Filament\Resources\Products\Pages\EditProduct;
 use App\Filament\Resources\Products\Pages\ListProducts;
@@ -21,7 +22,7 @@ class ProductResource extends Resource
 {
     protected static ?string $model = Product::class;
 
-    protected static ?int $navigationSort = 2;
+    protected static ?int $navigationSort = AdminMenuOrder::PRODUCTS->value;
 
     protected static string | UnitEnum | null $navigationGroup = 'Shop';
     

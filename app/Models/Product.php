@@ -54,11 +54,6 @@ class Product extends BaseModel
         return $this->category_id;
     }
 
-    public function getSlug(): string
-    {
-        return $this->slug;
-    }
-
     public function getType(): ProductType
     {
         return $this->type;

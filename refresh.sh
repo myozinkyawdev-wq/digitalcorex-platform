@@ -6,6 +6,9 @@ php artisan migrate:fresh --force
 echo '---------- Installing Users ----------'
 php artisan db:seed
 
+echo '---------- Installing Account Platforms ----------'
+php artisan seed:account-platforms
+
 echo '---------- Installing Categories ----------'
 php artisan seed:categories
 

@@ -26,7 +26,7 @@ class CategorySeeder extends Command
      */
     public function handle()
     {
-        foreach (config('categories') as $categoryData) {
+        foreach ($products = config('utility.categories', []) as $categoryData) {
             Category::query()->updateOrCreate([
                 'name' => $categoryData['name'],
             ], $categoryData);

@@ -2,6 +2,7 @@
 
 namespace App\Filament\Pages;
 
+use App\Enums\AdminMenuOrder;
 use App\Models\VariantUnit as TreeModel;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -13,7 +14,7 @@ class VariantUnitPage extends TreePage
 {
     protected static string $model = TreeModel::class;
 
-    protected static ?int $navigationSort = 3;
+    protected static ?int $navigationSort = AdminMenuOrder::VARIANT_UNITS->value;
 
     protected static string | UnitEnum | null $navigationGroup = 'Shop';
 
@@ -29,7 +30,7 @@ class VariantUnitPage extends TreePage
     protected function getActions(): array
     {
         return [
-            $this->getCreateAction(),
+            // $this->getCreateAction(),
             // SAMPLE CODE, CAN DELETE
             //\Filament\Pages\Actions\Action::make('sampleAction'),
         ];

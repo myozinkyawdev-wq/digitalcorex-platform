@@ -10,6 +10,7 @@ use App\Models\Traits\HasTelegramAccount;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
@@ -70,6 +71,14 @@ class User extends Authenticatable
         return $query
             ->when($isActive, fn ($q) => $q->where('status', UserStatus::ACTIVE))
             ->when(! $isActive, fn ($q) => $q->where('status', UserStatus::SUSPENDED));
+    }
+
+    public function userAccounts(): BelongsToMany
+    {
+        return $this->belongsToMany(AccountPlatform::class, 'user_accounts')
+            ->withPivot(['id', 'account_id', 'username', 'photo_url', 'account_url'])
+            ->withTimestamps()
+            ->using(UserAccount::class);
     }
 
     public function getUsername(): ?string

@@ -31,7 +31,7 @@ class ProductSeeder extends Command
      */
     public function handle()
     {
-        $products = config('products');
+        $products = config('utility.products', []);
 
         foreach ($products as $productData) {
             // Resolve category_id from category_code

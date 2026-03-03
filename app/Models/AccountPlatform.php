@@ -2,22 +2,24 @@
 
 namespace App\Models;
 
-use App\Enums\OrderStatus;
+use SolutionForest\FilamentTree\Concern\ModelTree;
 
-class Order extends BaseModel
+class AccountPlatform extends BaseModel
 {
+    use ModelTree;
+
     /**
      * The attributes that are mass assignable.
      *
      * @var list<string>
      */
     protected $fillable = [
-        'order_reference_number',
-        'product_id',
-        'user_id',
-        'completed_at',
-        'cancelled_at',
-        'status',
+        'parent_id',
+        'name',
+        'order',
+        'slug',
+        'code',
+        'is_active',
     ];
 
     /**
@@ -28,9 +30,7 @@ class Order extends BaseModel
     protected function casts(): array
     {
         return [
-            'completed_at' => 'datetime',
-            'cancelled_at' => 'datetime',
-            'status' => OrderStatus::class,
+            'is_active' => 'boolean',
         ];
     }
 }

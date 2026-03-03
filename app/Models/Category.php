@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Cache\CategoryCache;
 use App\Models\Product;
-use App\Models\Traits\HasGetterAttributes;
 use App\Observers\Category\CategoryObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -14,7 +13,6 @@ use SolutionForest\FilamentTree\Concern\ModelTree;
 class Category extends BaseModel
 {
     use ModelTree;
-    use HasGetterAttributes;
     
     /**
      * The attributes that are mass assignable.
@@ -61,10 +59,5 @@ class Category extends BaseModel
     public function getOrder(): int
     {
         return $this->order;
-    }
-
-    public function getSlug(): string
-    {
-        return $this->slug;
     }
 }

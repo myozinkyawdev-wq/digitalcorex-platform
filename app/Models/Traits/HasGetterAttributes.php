@@ -16,6 +16,11 @@ trait HasGetterAttributes
         return $this->name;
     }
 
+    public function getSlug(): string
+    {
+        return $this->slug;
+    }
+
     public function getDescription(): ?string
     {
         return $this->description;

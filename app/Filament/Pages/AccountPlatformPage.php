@@ -3,7 +3,7 @@
 namespace App\Filament\Pages;
 
 use App\Enums\AdminMenuOrder;
-use App\Models\Category as TreeModel;
+use App\Models\AccountPlatform as TreeModel;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -11,15 +11,15 @@ use Filament\Support\Icons\Heroicon;
 use SolutionForest\FilamentTree\Pages\TreePage;
 use UnitEnum;
 
-class CategoryPage extends TreePage
+class AccountPlatformPage extends TreePage
 {
     protected static string $model = TreeModel::class;
-    
-    protected static ?int $navigationSort = AdminMenuOrder::CATEGORIES->value;
 
-    protected static string | UnitEnum | null $navigationGroup = 'Shop';
+    protected static ?int $navigationSort = AdminMenuOrder::ACCOUNT_PLATFORMS->value;
 
-    protected static \BackedEnum|string|null $navigationIcon = Heroicon::OutlinedTag;
+    protected static string | UnitEnum | null $navigationGroup = 'Settings';
+
+    protected static \BackedEnum|string|null $navigationIcon = Heroicon::OutlinedShare;
 
     protected static int $maxDepth = 2;
 

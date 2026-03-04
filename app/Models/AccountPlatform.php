@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Cache\AccountPlatformCache;
 use SolutionForest\FilamentTree\Concern\ModelTree;
 
 class AccountPlatform extends BaseModel
@@ -32,5 +33,10 @@ class AccountPlatform extends BaseModel
         return [
             'is_active' => 'boolean',
         ];
+    }
+
+    public static function toCachedSelection(): array
+    {
+        return app(AccountPlatformCache::class)->toSelection();
     }
 }

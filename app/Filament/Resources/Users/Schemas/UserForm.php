@@ -2,10 +2,12 @@
 
 namespace App\Filament\Resources\Users\Schemas;
 
+use App\Enums\FileDirectory;
 use App\Enums\UserRole;
 use App\Models\AccountPlatform;
 use App\Models\User;
 use App\Rules\CheckPhoneIsValid;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -44,7 +46,7 @@ class UserForm
                                     ->rules([new CheckPhoneIsValid])
                                     ->onlyCountries(['mm', 'th'])
                                     ->initialCountry('mm')
-                                    ->label('phone')
+                                    ->label('Phone')
                                     ->required(),
                                 TextInput::make('password')
                                     ->required(fn(string $context): bool => $context === 'create')
@@ -65,19 +67,39 @@ class UserForm
                             ->schema([
                                 Repeater::make('user_accounts')
                                     ->relationship('userAccounts')
+                                    ->inlineLabel(false)
                                     ->schema([
-                                        Select::make('account_platform_id') 
-                                            ->label('Platform')
-                                            ->options(AccountPlatform::all()->pluck('name', 'id'))
-                                            ->required()
-                                            ->searchable(),
+                                        FileUpload::make('photo_url')
+                                            ->label('Photo')
+                                            ->acceptedFileTypes(['image/jpeg', 'image/png'])
+                                            ->directory(FileDirectory::USER_ACCOUNT_PLATFORM())
+                                            ->disk(getBucketDisk())
+                                            ->visibility('public')
+                                            ->preserveFilenames()
+                                            ->previewable()
+                                            ->maxSize(1024),
 
-                                        TextInput::make('username')
-                                            ->label('Username'),
+                                        Select::make('account_platform_id') 
+                                            ->placeholder('Please select Account Platform')
+                                            ->options(AccountPlatform::toCachedSelection())
+                                            ->label('Account Platform')
+                                            ->searchable()
+                                            ->required(),
 
                                         TextInput::make('account_id')
-                                            ->label('Platform User ID'),
+                                            ->label('Platform User ID')
+                                            ->maxLength(255),
 
+                                        TextInput::make('name')
+                                            ->maxLength(255)
+                                            ->label('Name')
+                                            ->required(),
+                                        
+                                        TextInput::make('username')
+                                            ->maxLength(50)
+                                            ->label('Username')
+                                            ->required(),
+                                        
                                         TextInput::make('account_url')
                                             ->label('Profile Link')
                                             ->url(),

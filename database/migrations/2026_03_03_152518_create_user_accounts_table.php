@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignUuid('user_id');
             $table->foreignUuid('account_platform_id');
             $table->string('account_id')->nullable();
+            $table->string('name')->nullable();
             $table->string('username', 50)->nullable();
             $table->string('photo_url', 500)->nullable();
             $table->string('account_url', 500)->nullable();

@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
@@ -73,12 +74,9 @@ class User extends Authenticatable
             ->when(! $isActive, fn ($q) => $q->where('status', UserStatus::SUSPENDED));
     }
 
-    public function userAccounts(): BelongsToMany
+    public function userAccounts(): HasMany
     {
-        return $this->belongsToMany(AccountPlatform::class, 'user_accounts')
-            ->withPivot(['id', 'account_id', 'username', 'photo_url', 'account_url'])
-            ->withTimestamps()
-            ->using(UserAccount::class);
+        return $this->hasMany(UserAccount::class);
     }
 
     public function getUsername(): ?string
